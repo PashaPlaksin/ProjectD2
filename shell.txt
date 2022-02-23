@@ -1,0 +1,50 @@
+>>> from news.models import *
+>>> User1 = User.objects.create_user(username='User1')
+>>> User2 = User.objects.create_user(username='User2')
+>>> Author.objects.create(author_user=User1)
+>>> Author.objects.create(author_user=User2)
+>>> politics = Category.objects.create(category_name='Politics')
+>>> sport = Category.objects.create(category_name='Sport')
+>>> business = Category.objects.create(category_name='Business')
+>>> economy = Category.objects.create(category_name='Economy')
+>>> Post.objects.create(author=Author.objects.get(id=1), post_types='ar', title_post='Коронавирус: больные ковидом заражают окружающих быстрее, чем предполагалось', post_text='Первое в мире исследование, в котором добровольцы были преднамеренно заражены Covid-19, показало, что симптомы начинают появляться всего через два дня, намного быстрее, чем ожидалось. При этом больные становятся источниками инфекции и заражают окружающих.')
+>>> Post.objects.create(author=Author.objects.get(id=1), post_types='ne', title_post='В России начнут выдавать QR-коды на основе антител. Как это будет работать?', post_text='В России с 21 февраля начнут выдавать QR-коды по результатам теста на антитела к коронавирусу. Он будет действовать полгода, а не год, как сертификат о вакцинации. Получить его можно будет только один раз')
+>>> Post.objects.create(author=Author.objects.get(id=2), post_types='ar', title_post='Как получить сертификат на основе антител', post_text='В приказе минздрава упоминается обычный анализ на антитела IgG, но не указан уровень показатель, необходимый для выдачи QR-кода. То есть сертификат можно будет получить даже при минимальных титрах выше референсных значений.')
+>>> Post.objects.get(id=1).categories.add(economy, business)
+>>> Post.objects.get(id=2).categories.add(politics)
+>>> Post.objects.get(id=3).categories.add(sport)
+>>> Comment.objects.create(post=Post.objects.get(id=1), user=User.objects.get(username='User1'), comment_text='Комментарий который разместил пользователь User1')
+>>> Comment.objects.create(post=Post.objects.get(id=2), user=User.objects.get(username='User2'), comment_text='Комментарий который разместил пользователь User2')
+>>> Comment.objects.create(post=Post.objects.get(id=2), user=User.objects.get(username='User1'), comment_text='Комментарий который разместил пользователь User1 ко второму посту')
+>>> Comment.objects.create(post=Post.objects.get(id=3), user=User.objects.get(username='User2'), comment_text='Комментарий который разместил пользователь Use2 к третьему посту')
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=2).like()
+>>> Post.objects.get(id=2).like()
+>>> Post.objects.get(id=3).islike()
+>>> Post.objects.get(id=3).dislike()
+>>> Post.objects.get(id=3).dislike()
+>>> Comment.objects.get(id=1).like()
+>>> Comment.objects.get(id=1).like()
+>>> Comment.objects.get(id=2).like()
+>>> Comment.objects.get(id=3).dislike()
+>>> Comment.objects.get(id=3).dislike()
+>>> Comment.objects.get(id=4).dislike()
+>>> Comment.objects.get(id=4).dislike()
+>>> Comment.objects.get(id=4).like()
+>>> Author.objects.get(id=1).update_rating()
+>>> Author.objects.get(id=2).update_rating()
+>>> Author.objects.order_by('-rating')[:1].get().author_user.username
+>>> best_post = Post.objects.order_by('-post_rating')[:1]
+>>> Comment.objects.filter(post=best_post).values('time_add_comment', 'user', 'comment_rating', 'comment_text')
+
+
+
+
+
+
+
