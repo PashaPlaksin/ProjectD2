@@ -41,6 +41,9 @@
 >>> Author.objects.order_by('-rating')[:1].get().author_user.username
 >>> best_post = Post.objects.order_by('-post_rating')[:1]
 >>> Comment.objects.filter(post=best_post).values('time_add_comment', 'user', 'comment_rating', 'comment_text')
+>>> Post.objects.all().order_by('-post_rating').values('time_add_post', 'author__author_user__username', 'post_rating', 'title_post', 'post_text')[0]
+>>> Comment.objects.all().order_by().values('time_add_comment', 'user__username', 'comment_text', 'comment_rating', 'comment_text')[0]
+
 
 
 
